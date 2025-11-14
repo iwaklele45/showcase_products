@@ -68,7 +68,7 @@ php artisan key:generate
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432
-DB_DATABASE=showcase_db
+DB_DATABASE=showcase_products
 DB_USERNAME=postgres
 DB_PASSWORD=yourpassword
 ```
