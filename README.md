@@ -23,7 +23,9 @@ Admin dapat melakukan verifikasi penjual dan memoderasi seluruh aktivitas dalam 
 
 ---
 
-## 📦 Installation & Usage
+# 📦 Installation & Usage
+
+## Non Docker user
 
 ### 1. Clone Repository
 
@@ -90,15 +92,31 @@ php artisan serve
 ```bash
 npm run dev
 ```
+## Docker User
+
+### Requirements
+
+- PHP 8.x, Composer
+- Node 20+ (for Vite, optional)
+- Docker + Docker Compose  **(for Docker setup)**
+
+### Run
+
+```bash
+cp .env.docker.example .env
+docker compose up -d
+docker compose exec laravel.test php artisan key:generate
+docker compose exec laravel.test php artisan migrate
+```
 
 ---
 
-## 🛠 Tech Stack
+# 🛠 Tech Stack
 - Laravel 12
 - PostgreSQL
 - Blade / Tailwind / Vite / Bootstrap
 - Laravel Breeze
 - Composer & NPM
 
-## 📄 License
+# 📄 License
 Project ini dirilis secara open-source.
