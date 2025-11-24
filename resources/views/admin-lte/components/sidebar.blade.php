@@ -53,6 +53,14 @@
                             </a>
                         </li>
                     </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon bi bi-basket"></i>
+                                <p>Request Seller</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 {{-- <li class="nav-header">EXAMPLES</li>
                 <li class="nav-item">

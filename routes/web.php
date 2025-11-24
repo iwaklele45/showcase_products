@@ -1,11 +1,19 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    if (Auth::check()) {
+        if (Auth::user()->role === 'admin') {
+            return redirect('/admin/dashboard');
+        }
+    }
+    return view('home');
+})->name('home');
 
 //test adminlte view npm and adding on app.css & app.js
 // Route::view('/dashboard', 'dashboard-adminlte');
@@ -25,6 +33,16 @@ Route::middleware(['auth', 'role:user,seller'])->group(function () {
     Route::get('/user/dashboard', function () {
         return view('user.dashboard');
     })->name('user.dashboard');
+
+    Route::get('/toko/{username}', [ShopController::class, 'index'])
+        ->name('seller.index');
+
+    Route::prefix('/toko/{username}')
+        ->name('seller.')
+        ->group(function () {
+            Route::resource('categories', CategoryController::class);
+            Route::resource('products', \App\Http\Controllers\ProductController::class);
+        });
 });
 
 

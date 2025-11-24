@@ -2,15 +2,27 @@
 <nav class="app-header navbar navbar-expand bg-body">
     <!--begin::Container-->
     <div class="container-fluid">
+        <!-- Brand (left) -->
+        <a class="navbar-brand ms-2" href="#">Showcase Product</a>
         <!--begin::Start Navbar Links-->
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
-                    <i class="bi bi-list"></i>
-                </a>
-            </li>
-            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
-            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
+            @auth
+
+                @if (Auth::user()->role == 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+                            <i class="bi bi-list"></i>
+                        </a>
+                    </li>
+                @endif
+                @if (Auth::user()->role != 'admin')
+                    <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Category</a></li>
+                @endif
+            @else
+                <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Category</a></li>
+            @endauth
+            {{-- <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
+            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li> --}}
         </ul>
         <!--end::Start Navbar Links-->
         <!--begin::End Navbar Links-->
@@ -22,112 +34,115 @@
                 </a>
             </li>
             <!--end::Navbar Search-->
-            <!--begin::Messages Dropdown Menu-->
-            <li class="nav-item dropdown">
-                <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                    <i class="bi bi-chat-text"></i>
-                    <span class="navbar-badge badge text-bg-danger">3</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                    <a href="#" class="dropdown-item">
-                        <!--begin::Message-->
-                        <div class="d-flex">
-                            <div class="flex-shrink-0">
-                                <img src="./assets/img/user1-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 rounded-circle me-3" />
-                            </div>
-                            <div class="flex-grow-1">
-                                <h3 class="dropdown-item-title">
-                                    Brad Diesel
-                                    <span class="float-end fs-7 text-danger"><i class="bi bi-star-fill"></i></span>
-                                </h3>
-                                <p class="fs-7">Call me whenever you can...</p>
-                                <p class="fs-7 text-secondary">
-                                    <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                </p>
-                            </div>
-                        </div>
-                        <!--end::Message-->
+            @auth
+                <!--begin::Messages Dropdown Menu-->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                        <i class="bi bi-chat-text"></i>
+                        <span class="navbar-badge badge text-bg-danger">3</span>
                     </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <!--begin::Message-->
-                        <div class="d-flex">
-                            <div class="flex-shrink-0">
-                                <img src="./assets/img/user8-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 rounded-circle me-3" />
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                        <a href="#" class="dropdown-item">
+                            <!--begin::Message-->
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <img src="./assets/img/user1-128x128.jpg" alt="User Avatar"
+                                        class="img-size-50 rounded-circle me-3" />
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h3 class="dropdown-item-title">
+                                        Brad Diesel
+                                        <span class="float-end fs-7 text-danger"><i class="bi bi-star-fill"></i></span>
+                                    </h3>
+                                    <p class="fs-7">Call me whenever you can...</p>
+                                    <p class="fs-7 text-secondary">
+                                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                                    </p>
+                                </div>
                             </div>
-                            <div class="flex-grow-1">
-                                <h3 class="dropdown-item-title">
-                                    John Pierce
-                                    <span class="float-end fs-7 text-secondary">
-                                        <i class="bi bi-star-fill"></i>
-                                    </span>
-                                </h3>
-                                <p class="fs-7">I got your message bro</p>
-                                <p class="fs-7 text-secondary">
-                                    <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                </p>
+                            <!--end::Message-->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <!--begin::Message-->
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <img src="./assets/img/user8-128x128.jpg" alt="User Avatar"
+                                        class="img-size-50 rounded-circle me-3" />
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h3 class="dropdown-item-title">
+                                        John Pierce
+                                        <span class="float-end fs-7 text-secondary">
+                                            <i class="bi bi-star-fill"></i>
+                                        </span>
+                                    </h3>
+                                    <p class="fs-7">I got your message bro</p>
+                                    <p class="fs-7 text-secondary">
+                                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <!--end::Message-->
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <!--begin::Message-->
-                        <div class="d-flex">
-                            <div class="flex-shrink-0">
-                                <img src="./assets/img/user3-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 rounded-circle me-3" />
+                            <!--end::Message-->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <!--begin::Message-->
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <img src="./assets/img/user3-128x128.jpg" alt="User Avatar"
+                                        class="img-size-50 rounded-circle me-3" />
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h3 class="dropdown-item-title">
+                                        Nora Silvester
+                                        <span class="float-end fs-7 text-warning">
+                                            <i class="bi bi-star-fill"></i>
+                                        </span>
+                                    </h3>
+                                    <p class="fs-7">The subject goes here</p>
+                                    <p class="fs-7 text-secondary">
+                                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                                    </p>
+                                </div>
                             </div>
-                            <div class="flex-grow-1">
-                                <h3 class="dropdown-item-title">
-                                    Nora Silvester
-                                    <span class="float-end fs-7 text-warning">
-                                        <i class="bi bi-star-fill"></i>
-                                    </span>
-                                </h3>
-                                <p class="fs-7">The subject goes here</p>
-                                <p class="fs-7 text-secondary">
-                                    <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                </p>
-                            </div>
-                        </div>
-                        <!--end::Message-->
+                            <!--end::Message-->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                    </div>
+                </li>
+                <!--end::Messages Dropdown Menu-->
+                <!--begin::Notifications Dropdown Menu-->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                        <i class="bi bi-bell-fill"></i>
+                        <span class="navbar-badge badge text-bg-warning">15</span>
                     </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                </div>
-            </li>
-            <!--end::Messages Dropdown Menu-->
-            <!--begin::Notifications Dropdown Menu-->
-            <li class="nav-item dropdown">
-                <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                    <i class="bi bi-bell-fill"></i>
-                    <span class="navbar-badge badge text-bg-warning">15</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                    <span class="dropdown-item dropdown-header">15 Notifications</span>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="bi bi-envelope me-2"></i> 4 new messages
-                        <span class="float-end text-secondary fs-7">3 mins</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="bi bi-people-fill me-2"></i> 8 friend requests
-                        <span class="float-end text-secondary fs-7">12 hours</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
-                        <span class="float-end text-secondary fs-7">2 days</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
-                </div>
-            </li>
-            <!--end::Notifications Dropdown Menu-->
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                        <span class="dropdown-item dropdown-header">15 Notifications</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="bi bi-envelope me-2"></i> 4 new messages
+                            <span class="float-end text-secondary fs-7">3 mins</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="bi bi-people-fill me-2"></i> 8 friend requests
+                            <span class="float-end text-secondary fs-7">12 hours</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
+                            <span class="float-end text-secondary fs-7">2 days</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
+                    </div>
+                </li>
+                <!--end::Notifications Dropdown Menu-->
+            @endauth
+
             <!--begin::Fullscreen Toggle-->
             <li class="nav-item">
                 <a class="nav-link" href="#" data-lte-toggle="fullscreen">
@@ -137,54 +152,69 @@
             </li>
             <!--end::Fullscreen Toggle-->
             <!--begin::User Menu Dropdown-->
-            <li class="nav-item dropdown user-menu">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <img src="./assets/img/user2-160x160.jpg" class="user-image rounded-circle shadow"
-                        alt="User Image" />
-                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                    <!--begin::User Image-->
-                    <li class="user-header text-bg-primary">
+            @auth
+                <li class="nav-item dropdown user-menu">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle"></i>
+                        <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-sm">
+                        <li class="user-header text-bg-primary">
+                            <i class="bi bi-person-circle" style="font-size: 50px"></i>
+                            <p>
+                                {{ Auth::user()->name }}
+                                <small>{{ Auth::user()->email }}</small>
+                            </p>
+                        </li>
+                        <!--begin::Menu Body-->
+                        @if (Auth::user()->role != 'admin')
+                            <li class="user-body">
+                                <!--begin::Row-->
+                                <div class="row">
+                                    @if (Auth::user()->role == 'seller')
+                                        <div class="col-6 text-center"><a href="#">Followers</a></div>
+                                        <div class="col-6 text-center"><a href="#">My Store</a></div>
+                                    @else
+                                        <div class="col-6 offset-6 text-center"><a href="#">Followers</a></div>
+                                    @endif
+                                </div>
+                                <!--end::Row-->
+                            </li>
+                        @endif
+                        <!--end::Menu Body-->
 
-                        <p>
-                            {{ Auth::user()->name }}
-                            <small>{{ Auth::user()->email }}</small>
-                        </p>
-                    </li>
-                    <!--end::User Image-->
-                    <!--begin::Menu Body-->
-                    <li class="user-body">
-                        <!--begin::Row-->
-                        <div class="row">
-                            <div class="col-6 text-center"><a href="#">Followers</a></div>
-                            <div class="col-6 text-center"><a href="#">Sales</a></div>
-                            {{-- <div class="col-4 text-center"><a href="#">Friends</a></div> --}}
-                        </div>
-                        <!--end::Row-->
-                    </li>
-                    <!--end::Menu Body-->
-                    <!--begin::Menu Footer-->
-                    <li class="user-footer">
-                        <div class="row w-100 m-0">
-                            <div class="col-8 p-0 pe-2">
-                                <a href="{{ route('profile.edit') }}" class="btn btn-warning w-100">
-                                    Profile
-                                </a>
+                        <!--begin::Menu Footer-->
+                        <li class="user-footer">
+                            <div class="row w-100 m-0">
+                                @if (Auth::user()->role != 'admin')
+                                    <div class="col-8 p-0 pe-2">
+                                        {{-- <a href="{{ route('profile.edit') }}" class="btn btn-warning w-100">
+                                            Profile
+                                        </a> --}}
+                                        <a href="{{ route('user.dashboard') }}" class="btn btn-warning w-100">
+                                            Dashboard
+                                        </a>
+                                    </div>
+                                @endif
+                                <div class="col-4 p-0 ms-auto">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <input type="submit" class="btn btn-danger w-100" value="Logout">
+                                    </form>
+                                </div>
                             </div>
-                            <div class="col-4 p-0">
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <input type="submit" class="btn btn-primary w-100" value="Logout">
-                                </form>
-                            </div>
-                        </div>
-                    </li>
-
-
-                    <!--end::Menu Footer-->
-                </ul>
-            </li>
+                        </li>
+                        <!--end::Menu Footer-->
+                    </ul>
+                </li>
+            @else
+                <li class="nav-item d-flex align-items-center">
+                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    @if (Route::has('register'))
+                        <a class="nav-link ms-2" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    @endif
+                </li>
+            @endauth
             <!--end::User Menu Dropdown-->
         </ul>
         <!--end::End Navbar Links-->

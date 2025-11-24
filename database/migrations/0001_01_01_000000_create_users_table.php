@@ -39,7 +39,7 @@ return new class extends Migration
 
         Schema::table('users', function (Blueprint $table) {
             $table->string('username', 50)->unique()->after('id');
-            $table->string('role', 20)->default('user')->after('password'); // admin | penjual | user
+            $table->enum('role', ['admin', 'user', 'seller'])->default('user')->after('password'); // admin | penjual | user
 
             $table->boolean('email_verified')
                 ->default(false)

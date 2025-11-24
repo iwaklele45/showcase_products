@@ -28,10 +28,12 @@ class UserSeeder extends Seeder
         User::create([
             'username' => 'seller01',
             'name' => 'Penjual Satu',
-            'email' => 'penjual@example.com',
+            'email' => 'seller@example.com',
             'password' => Hash::make('password'),
             'role' => 'seller',
             'email_verified' => false,
+            'store_name' => 'Toko Jawa',
+            'store_description' => 'Ini adalah toko menjual peralatan elektronik'
         ]);
 
         // User Biasa
@@ -41,7 +43,7 @@ class UserSeeder extends Seeder
             'email' => 'user@example.com',
             'password' => Hash::make('password'),
             'role' => 'user',
-            'email_verified' => false,
+            'email_verified' => false
         ]);
     }
 }
