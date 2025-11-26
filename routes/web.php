@@ -36,6 +36,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/seller-requests', [SellerRequestController::class, 'index'])
         ->name('seller.requests');
 
+    Route::get('/admin/seller-requests/{id}/show', [SellerRequestController::class, 'show'])
+        ->name('seller.show');
+
+    Route::get('/admin/seller-request/{user}', [SellerRequestController::class, 'show'])
+        ->name('seller.show');
+
     Route::post('/admin/seller-request/{id}/approve', [SellerRequestController::class, 'approve'])
         ->name('seller.approve');
 
@@ -47,6 +53,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // ========== USER & SELLER ROUTES ==========
 Route::middleware(['auth', 'role:user'])->group(function () {
     // User mengirim request menjadi seller
+    Route::get('/request-seller', [SellerRequestController::class, 'showRequestForm'])
+        ->name('seller.request.form');
+
     Route::post('/request-seller', [SellerRequestController::class, 'requestSeller'])
         ->name('seller.request');
 });

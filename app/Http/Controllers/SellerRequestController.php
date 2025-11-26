@@ -10,8 +10,22 @@ use Illuminate\Support\Facades\Auth;
 
 class SellerRequestController extends Controller
 {
+    // Show form for user to request becoming a seller
+    public function showRequestForm()
+    {
+        return view('user.request');
+    }
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        $sellerVerification = SellerVerification::where('user_id', $user->id)->firstOrFail();
+
+        return view('admin.seller_request.show', compact('user', 'sellerVerification'));
+    }
+
     // USER mengirim request menjadi seller
-    public function requestSeller()
+    public function requestSeller(Request $request)
     {
         $user = Auth::user();
 
@@ -26,6 +40,18 @@ class SellerRequestController extends Controller
             return back()->with('error', 'Anda sudah menjadi seller.');
         }
 
+        // Validate incoming store data
+        $data = $request->validate([
+            'store_name' => ['required', 'string', 'max:100'],
+            'store_description' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        // Save store info to user profile
+        $user->update([
+            'store_name' => $data['store_name'],
+            'store_description' => $data['store_description'] ?? null,
+        ]);
+
         // Buat request baru
         SellerVerification::updateOrCreate(
             ['user_id' => $user->id],
@@ -34,9 +60,11 @@ class SellerRequestController extends Controller
 
         // Notifikasi ke admin
         $admin = User::where('role', 'admin')->first();
-        $admin->notify(new RequestSellerNotification($user));
+        if ($admin) {
+            $admin->notify(new RequestSellerNotification($user));
+        }
 
-        return back()->with('success', 'Permintaan menjadi seller telah dikirim.');
+        return redirect()->route('home')->with('success', 'Permintaan menjadi seller telah dikirim.');
     }
 
     // ADMIN melihat semua request

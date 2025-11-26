@@ -74,6 +74,8 @@
                                                 <i class="bi bi-x-circle"></i> Reject
                                             </button>
                                         </form>
+                                        <a href="{{ route('seller.show', $req->user->id) }}"
+                                            class="btn btn-warning btn-sm">Show Request</a>
                                     </td>
                                 </tr>
                             @empty

@@ -104,13 +104,12 @@
 
                                 {{-- Logic Role User/Seller aman disini karena sudah di dalam @auth --}}
                                 @if (Auth::user()->role == 'user')
-                                    <form action="{{ route('seller.request') }}" method="POST">
-                                        @csrf
-                                        <button class="nav-link btn btn-link">
+                                    <li class="nav-item">
+                                        <a href="{{ route('seller.request.form') }}" class="nav-link">
                                             <i class="nav-icon bi bi-shop-window"></i>
                                             <p>Be a Seller</p>
-                                        </button>
-                                    </form>
+                                        </a>
+                                    </li>
                                 @elseif (Auth::user()->role == 'seller')
                                     <li class="nav-item">
                                         <a href="{{ route('seller.index', Auth::user()->username) }}"
@@ -130,7 +129,7 @@
                 <li class="nav-header">ACTIONS</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-person-circle"></i>
+                        <i class="nav-icon bi bi-door-open-fill"></i>
                         <p>
                             @auth Logout
                             @else
