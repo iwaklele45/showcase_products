@@ -13,7 +13,7 @@
                     <div class="col-sm-6 d-flex flex-column align-items-end">
                         <ol class="breadcrumb mb-2">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Sidebar Mini</li>
+                            <li class="breadcrumb-item active" aria-current="page">Category</li>
                         </ol>
                         <a href="{{ route('seller.categories.create', $username) }}" class="btn btn-primary">Add
                             New

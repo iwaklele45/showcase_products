@@ -21,6 +21,13 @@
             <!--begin::Sidebar Menu-->
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation"
                 aria-label="Main navigation" data-accordion="false" id="navigation">
+                <li class="nav-header">HOMES</li>
+                <li class="nav-item">
+                    <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-house-fill"></i>
+                        <p>Home Page</p>
+                    </a>
+                </li>
                 <li class="nav-header">CATEGORIES</li>
                 <li class="nav-item">
                     <a href="{{ route('seller.categories.index', $username) }}" class="nav-link">

@@ -10,8 +10,9 @@
         <div class="card-body">
             <div class="form-group">
                 <label for="username">{{ __('Username') }}</label>
-                <input id="username" name="username" type="text" class="form-control"
-                    value="{{ old('username', $user->username) }}" required autofocus autocomplete="username">
+                <input @if (Auth::user()->role == 'seller') readonly @endif id="username" name="username" type="text"
+                    class="form-control" value="{{ old('username', $user->username) }}" required autofocus
+                    autocomplete="username">
                 @error('username')
                     <span class="text-danger small">{{ $message }}</span>
                 @enderror
@@ -35,7 +36,7 @@
                 @enderror
 
                 @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
-                        <p class="mt-2 mb-0 small text-secondary">
+                    <p class="mt-2 mb-0 small text-secondary">
                         {{ __('Your email address is unverified.') }}
                         <button form="send-verification"
                             class="btn btn-link p-0 ms-1">{{ __('Click here to re-send the verification email.') }}</button>

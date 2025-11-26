@@ -2,25 +2,17 @@
 <nav class="app-header navbar navbar-expand bg-body">
     <!--begin::Container-->
     <div class="container-fluid">
-        <!-- Brand (left) -->
-        <a class="navbar-brand ms-2" href="#">Showcase Product</a>
+
         <!--begin::Start Navbar Links-->
         <ul class="navbar-nav">
-            @auth
+            <li class="nav-item">
+                <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+                    <i class="bi bi-list"></i>
+                </a>
+            </li>
 
-                @if (Auth::user()->role == 'admin')
-                    <li class="nav-item">
-                        <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
-                            <i class="bi bi-list"></i>
-                        </a>
-                    </li>
-                @endif
-                @if (Auth::user()->role != 'admin')
-                    <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Category</a></li>
-                @endif
-            @else
-                <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Category</a></li>
-            @endauth
+            {{-- <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Category</a></li> --}}
+            {{-- <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Category</a></li> --}}
             {{-- <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
             <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li> --}}
         </ul>
@@ -166,53 +158,7 @@
                                 <small>{{ Auth::user()->email }}</small>
                             </p>
                         </li>
-                        <!--begin::Menu Body-->
-                        @if (Auth::user()->role != 'admin')
-                            <li class="user-body">
-                                <!--begin::Row-->
-                                <div class="row">
-                                    @if (Auth::user()->role == 'seller')
-                                        <div class="col-6 text-center"><a href="#">Followers</a></div>
-                                        <div class="col-6 text-center"><a href="#">My Store</a></div>
-                                    @else
-                                        <div class="col-6 offset-6 text-center"><a href="#">Followers</a></div>
-                                    @endif
-                                </div>
-                                <!--end::Row-->
-                            </li>
-                        @endif
-                        <!--end::Menu Body-->
-
-                        <!--begin::Menu Footer-->
-                        <li class="user-footer">
-                            <div class="row w-100 m-0">
-                                @if (Auth::user()->role != 'admin')
-                                    <div class="col-8 p-0 pe-2">
-                                        {{-- <a href="{{ route('profile.edit') }}" class="btn btn-warning w-100">
-                                            Profile
-                                        </a> --}}
-                                        <a href="{{ route('user.dashboard') }}" class="btn btn-warning w-100">
-                                            Dashboard
-                                        </a>
-                                    </div>
-                                @endif
-                                <div class="col-4 p-0 ms-auto">
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <input type="submit" class="btn btn-danger w-100" value="Logout">
-                                    </form>
-                                </div>
-                            </div>
-                        </li>
-                        <!--end::Menu Footer-->
                     </ul>
-                </li>
-            @else
-                <li class="nav-item d-flex align-items-center">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    @if (Route::has('register'))
-                        <a class="nav-link ms-2" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    @endif
                 </li>
             @endauth
             <!--end::User Menu Dropdown-->

@@ -32,11 +32,7 @@
 
     <div class="app-wrapper">
         @include('admin-lte.components.header')
-        @auth
-            @if (Auth::user()->role == 'admin')
-                @include('admin-lte.components.sidebar')
-            @endif
-        @endauth
+        @include('admin-lte.components.sidebar')
         <main class="app-main">
             <div class="app-main">
                 @yield('content')

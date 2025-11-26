@@ -2,14 +2,13 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <!-- Username -->
         <div>
             <x-input-label for="username" :value="__('Username')" />
             <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required
                 autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('username')" class="mt-2" />
         </div>
-        <!-- Name -->
+
         <div class="mt-4">
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
@@ -17,7 +16,6 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
@@ -25,7 +23,6 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
         <div class="mt-4" x-data="{ show: false }">
             <x-input-label for="password" :value="__('Password')" />
 
@@ -52,7 +49,6 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Confirm Password -->
         <div class="mt-4" x-data="{ show: false }">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
@@ -94,6 +90,13 @@
             <x-primary-button class="ms-4">
                 {{ __('Register') }}
             </x-primary-button>
+        </div>
+
+        <div class="mt-4">
+            <a href="{{ route('home') }}"
+                class="flex justify-center w-full px-4 py-2 text-sm font-semibold text-white uppercase transition duration-150 ease-in-out bg-gray-500 border border-transparent rounded-md hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300">
+                {{ __('Back to Home') }}
+            </a>
         </div>
     </form>
 </x-guest-layout>
