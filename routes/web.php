@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
-use App\Models\Category;
+use App\Http\Controllers\SellerRequestController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Models\Category;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -14,24 +17,38 @@ Route::get('/', function () {
         }
     }
 
-    // Fetch distinct category names across sellers and pass to homepage
     $categories = Category::select('name')->distinct()->orderBy('name')->get();
 
     return view('home', compact('categories'));
 })->name('home');
 
-//test adminlte view npm and adding on app.css & app.js
-// Route::view('/dashboard', 'dashboard-adminlte');
 
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
+// ========== ADMIN ROUTES ==========
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    // User management
+    Route::resource('users', UserController::class);
+
+    // Notifikasi & approval untuk seller
+    Route::get('/admin/seller-requests', [SellerRequestController::class, 'index'])
+        ->name('seller.requests');
+
+    Route::post('/admin/seller-request/{id}/approve', [SellerRequestController::class, 'approve'])
+        ->name('seller.approve');
+
+    Route::post('/admin/seller-request/{id}/reject', [SellerRequestController::class, 'reject'])
+        ->name('seller.reject');
+});
+
+
+// ========== USER & SELLER ROUTES ==========
+Route::middleware(['auth', 'role:user'])->group(function () {
+    // User mengirim request menjadi seller
+    Route::post('/request-seller', [SellerRequestController::class, 'requestSeller'])
+        ->name('seller.request');
 });
 
 Route::middleware(['auth', 'role:user,seller'])->group(function () {
@@ -46,15 +63,17 @@ Route::middleware(['auth', 'role:user,seller'])->group(function () {
         ->name('seller.')
         ->group(function () {
             Route::resource('categories', CategoryController::class);
-            Route::resource('products', \App\Http\Controllers\ProductController::class);
+            Route::resource('products', ProductController::class);
         });
 });
 
 
+// ========== PROFILE ROUTES ==========
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__ . '/auth.php';

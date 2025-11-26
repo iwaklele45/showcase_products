@@ -20,11 +20,13 @@
         <!--begin::End Navbar Links-->
         <ul class="navbar-nav ms-auto">
             <!--begin::Navbar Search-->
-            <li class="nav-item">
-                <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                    <i class="bi bi-search"></i>
-                </a>
-            </li>
+            @if (Auth::user()->role != 'admin')
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                        <i class="bi bi-search"></i>
+                    </a>
+                </li>
+            @endif
             <!--end::Navbar Search-->
             @auth
                 <!--begin::Messages Dropdown Menu-->

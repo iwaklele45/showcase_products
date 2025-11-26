@@ -30,20 +30,26 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{{ route('users.index') }}" class="nav-link">
                                     <i class="nav-icon bi bi-person"></i>
                                     <p>All Users</p>
                                 </a>
                             </li>
                         </ul>
+                        {{-- @php
+                            $pendingCount = \App\Models\SellerVerification::where('status', 'pending')->count();
+                        @endphp --}}
+
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{{ route('seller.requests') }}" class="nav-link">
                                     <i class="nav-icon bi bi-basket"></i>
                                     <p>Request Seller</p>
                                 </a>
                             </li>
+
                         </ul>
+
                     </li>
                 @else
                     {{-- AREA PUBLIC / USER / SELLER --}}
@@ -98,12 +104,13 @@
 
                                 {{-- Logic Role User/Seller aman disini karena sudah di dalam @auth --}}
                                 @if (Auth::user()->role == 'user')
-                                    <li class="nav-item">
-                                        <a href="" class="nav-link">
+                                    <form action="{{ route('seller.request') }}" method="POST">
+                                        @csrf
+                                        <button class="nav-link btn btn-link">
                                             <i class="nav-icon bi bi-shop-window"></i>
                                             <p>Be a Seller</p>
-                                        </a>
-                                    </li>
+                                        </button>
+                                    </form>
                                 @elseif (Auth::user()->role == 'seller')
                                     <li class="nav-item">
                                         <a href="{{ route('seller.index', Auth::user()->username) }}"

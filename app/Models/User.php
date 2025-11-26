@@ -23,7 +23,8 @@ class User extends Authenticatable
         'username',
         'password',
         'store_name',
-        'store_description'
+        'store_description',
+        'role'
     ];
 
     /**
@@ -47,5 +48,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function sellerVerification()
+    {
+        return $this->hasOne(SellerVerification::class);
     }
 }
