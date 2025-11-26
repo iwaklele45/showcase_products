@@ -36,6 +36,17 @@ class UserSeeder extends Seeder
             'store_description' => 'Ini adalah toko menjual peralatan elektronik'
         ]);
 
+        User::create([
+            'username' => 'seller02',
+            'name' => 'Penjual Dua',
+            'email' => 'seller2@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'seller',
+            'email_verified' => false,
+            'store_name' => 'Toko Jawir',
+            'store_description' => 'Ini adalah toko menjual peralatan elektronik'
+        ]);
+
         // User Biasa
         User::create([
             'username' => 'user01',

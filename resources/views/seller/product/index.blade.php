@@ -39,6 +39,8 @@
                                             <th style="width: 10px" class="text-center">#</th>
                                             <th>Name of Product</th>
                                             <th>Category</th>
+                                            <th>Stock</th>
+                                            <th>Sell</th>
                                             <th class="text-start" style="width: 200px;">Action</th>
                                         </tr>
                                     </thead>
@@ -46,8 +48,19 @@
                                         @forelse ($products ?? [] as $index => $product)
                                             <tr class="align-middle">
                                                 <td class="text-center">{{ $index + 1 }}.</td>
-                                                <td>{{ $product->name }}</td>
+                                                <td>{{ $product->name }}
+                                                    @if ($product->image)
+                                                        <div class="mb-2 ratio ratio-1x1 border d-flex justify-content-center align-items-center bg-light"
+                                                            style="width: 100px;">
+                                                            <img src="{{ asset('images/products/' . $product->image) }}"
+                                                                alt="Product Image" class="img-fluid"
+                                                                style="object-fit: contain; width: 100%; height: 100%;" />
+                                                        </div>
+                                                    @endif
+                                                </td>
                                                 <td>{{ optional($product->category)->name }}</td>
+                                                <td>{{ $product->stock }}</td>
+                                                <td>{{ $product->sell }}</td>
                                                 <td class="text-start">
                                                     <a href="{{ route('seller.products.edit', [$username, $product->id]) }}"
                                                         class="btn m-1 btn-warning">Edit</a>
@@ -63,7 +76,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="4" class="text-center py-4">No products yet.</td>
+                                                <td colspan="6" class="text-center py-4">No products yet.</td>
                                             </tr>
                                         @endforelse
                                     </tbody>

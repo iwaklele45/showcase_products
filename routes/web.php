@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +13,11 @@ Route::get('/', function () {
             return redirect('/admin/dashboard');
         }
     }
-    return view('home');
+
+    // Fetch distinct category names across sellers and pass to homepage
+    $categories = Category::select('name')->distinct()->orderBy('name')->get();
+
+    return view('home', compact('categories'));
 })->name('home');
 
 //test adminlte view npm and adding on app.css & app.js

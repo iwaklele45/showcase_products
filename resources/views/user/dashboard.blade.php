@@ -31,22 +31,21 @@
             <!--begin::Row-->
             <!-- Info boxes -->
             <div class="row">
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box">
-                        <span class="info-box-icon text-bg-primary shadow-sm">
-                            <i class="bi bi-gear-fill"></i>
-                        </span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">CPU Traffic</span>
-                            <span class="info-box-number">
-                                10
-                                <small>%</small>
-                            </span>
-                        </div>
-                        <!-- /.info-box-content -->
+                @if (Auth::user()->role == 'user')
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <a href="" class="info-box text-decoration-none text-body shadow-sm"
+                            style="cursor: pointer;">
+                            <span class="info-box-icon text-bg-success shadow-sm"> <i class="bi bi-shop"></i> </span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text fs-6">Request Seller</span>
+                                <span class="info-box-number text-muted" style="font-size: 0.8rem;">
+                                    Make a your shop</span>
+                            </div>
+                        </a>
                     </div>
-                    <!-- /.info-box -->
-                </div>
+                @endif
+
                 <!-- /.col -->
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box">

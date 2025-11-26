@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->double('price');
             $table->integer('stock');
+            $table->integer('sell')->default(0); // Tambahkan default
             $table->string('image', 255)->nullable();
             $table->timestamps();
         });
