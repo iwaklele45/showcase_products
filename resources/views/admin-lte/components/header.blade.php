@@ -20,6 +20,19 @@
                     </a>
                 </li>
             @endif
+            <li class="nav-item">
+                <div class="navbar-search-block">
+                    <form class="d-flex" action="{{ route('products.search') }}" method="GET">
+                        <div class="input-group">
+                            <input class="form-control form-control-navbar" type="search" name="q"
+                                placeholder="Search products" aria-label="Search" value="{{ request('q') }}">
+                            <button class="btn btn-navbar" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </li>
             <!--end::Navbar Search-->
 
             @auth

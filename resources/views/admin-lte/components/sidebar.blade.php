@@ -30,10 +30,12 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-person"></i>
-                                    <p>All Users</p>
-                                </a>
+                                <a href="" class="nav-link">
+                                    <a href="{{ route('admin.users.index') }}"
+                                        class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                                        <i class="nav-icon bi bi-person"></i>
+                                        <p>Manage Users</p>
+                                    </a>
                             </li>
                         </ul>
                         {{-- @php
@@ -42,9 +44,9 @@
 
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('seller.requests') }}" class="nav-link">
+                                <a href="" class="nav-link">
                                     <i class="nav-icon bi bi-basket"></i>
-                                    <p>Request Seller</p>
+                                    <p>Request Seller Approval</p>
                                 </a>
                             </li>
 
@@ -61,18 +63,18 @@
                             <p>Home Page</p>
                         </a>
                     </li>
-                    <li class="nav-header">CATEGORIES</li>
+                    <!-- <li class="nav-header">CATEGORIES</li>
                     <li class="nav-item">
                         <a href="{{ route('home') }}" class="nav-link">
                             <i class="nav-icon bi bi-tag-fill"></i>
                             <p>All Category</p>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-header">PRODUCTS</li>
                     <li class="nav-item">
-                        <a href="{{ route('home') }}" class="nav-link">
+                        <a href="{{ route('products.index') }}" class="nav-link">
                             <i class="nav-icon bi bi-bag-fill"></i>
-                            <p>All Product</p>
+                            <p>See All Product</p>
                         </a>
                     </li>
 
@@ -95,17 +97,11 @@
                                         <p>Profile</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="" class="nav-link">
-                                        <i class="nav-icon bi bi-hand-thumbs-up-fill"></i>
-                                        <p>Followers</p>
-                                    </a>
-                                </li>
 
                                 {{-- Logic Role User/Seller aman disini karena sudah di dalam @auth --}}
                                 @if (Auth::user()->role == 'user')
                                     <li class="nav-item">
-                                        <a href="{{ route('seller.request.form') }}" class="nav-link">
+                                        <a href="" class="nav-link">
                                             <i class="nav-icon bi bi-shop-window"></i>
                                             <p>Be a Seller</p>
                                         </a>
@@ -123,7 +119,6 @@
                         </li>
                     @endauth
                 @endif
-
 
                 {{-- MENU ACTIONS (LOGIN/LOGOUT) --}}
                 <li class="nav-header">ACTIONS</li>

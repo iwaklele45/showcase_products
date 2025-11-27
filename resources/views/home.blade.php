@@ -29,78 +29,95 @@
         <!--begin::Container-->
         <div class="container-fluid">
 
-            <!-- Banner -->
+            <!-- Hero -->
             <div class="row">
                 <div class="col-12">
-                    <div class="card bg-primary text-white shadow-sm mb-4">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <h1 class="h3 text-white">Selamat datang di Showcase Products</h1>
-                                    <p class="mb-0 opacity-75">Jelajahi kategori produk dari berbagai penjual. Temukan
-                                        produk terbaik untuk kebutuhanmu.</p>
+                    <div class="card bg-primary text-white border-0 shadow-sm mb-5">
+                        <div class="card-body d-flex align-items-center py-5">
+                            <div class="row align-items-center w-100">
+                                <div class="col-lg-8">
+                                    <p class="text-uppercase fw-semibold mb-2 opacity-75">Discover. Compare. Enjoy.</p>
+                                    <h1 class="display-5 fw-bold text-white mb-3">Welcome to Showcase Products</h1>
+                                    <p class="mb-4 opacity-75">Browse curated items from trusted sellers, find the perfect
+                                        products for your needs, and manage your shopping journey in one place.</p>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <a href="{{ route('products.index') }}" class="btn btn-light btn-lg text-primary fw-semibold">
+                                            Browse Products
+                                        </a>
+                                        @guest
+                                            <a href="{{ route('login') }}" class="btn btn-outline-light btn-lg fw-semibold">
+                                                Log In to Get Started
+                                            </a>
+                                        @endguest
+                                    </div>
                                 </div>
-                                {{-- <div class="text-end">
-                                    <a href="#" class="btn btn-light">Lihat Kategori</a>
-                                </div> --}}
+                                <div class="col-lg-4 d-none d-lg-flex justify-content-end">
+                                    <i class="bi bi-bag-check-fill" style="font-size: 7rem; opacity: 0.4;"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Categories Row -->
-            <div class="row mt-4">
+            <!-- Latest Products -->
+            <div class="row align-items-center mb-3">
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Categories</h3>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                        <div>
+                            <p class="text-uppercase text-muted small mb-1">Fresh from our sellers</p>
+                            <h2 class="h3 fw-bold mb-0">Latest Products</h2>
                         </div>
-                        <div class="card-body">
-                            @if (isset($categories) && $categories->count())
-                                <div class="row">
-                                    @foreach ($categories as $category)
-                                        <div class="col-md-3 col-sm-4 mb-3">
-                                            <a href="#" class="btn btn-outline-secondary w-100 text-start">
-                                                {{ $category->name }}
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @else
-                                <p>No categories found.</p>
-                            @endif
-                        </div>
+                        <a href="{{ route('products.index') }}" class="btn btn-outline-primary">
+                            View All Products
+                        </a>
                     </div>
                 </div>
             </div>
-            <!--! End of Categories Row-->
-            <!-- Categories Row -->
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Products</h3>
-                        </div>
-                        <div class="card-body">
-                            @if (isset($categories) && $categories->count())
-                                <div class="row">
-                                    @foreach ($categories as $category)
-                                        <div class="col-md-3 col-sm-4 mb-3">
-                                            <a href="#" class="btn btn-outline-secondary w-100 text-start">
-                                                {{ $category->name }}
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                </div>
+
+            <div class="row">
+                @forelse ($latestProducts as $product)
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            @if ($product->image)
+                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top"
+                                    alt="{{ $product->name }}" style="height: 210px; object-fit: cover;">
                             @else
-                                <p>No categories found.</p>
+                                <div class="bg-secondary d-flex align-items-center justify-content-center"
+                                    style="height: 210px;">
+                                    <i class="bi bi-image text-white" style="font-size: 3rem;"></i>
+                                </div>
                             @endif
+
+                            <div class="card-body d-flex flex-column">
+                                <span class="badge bg-primary mb-2 align-self-start">
+                                    {{ $product->category->name ?? 'Uncategorized' }}
+                                </span>
+                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <p class="card-text text-muted small flex-grow-1">
+                                    {{ \Illuminate\Support\Str::limit($product->description, 80) }}
+                                </p>
+                                <div class="mt-auto">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <strong class="text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</strong>
+                                        <small class="text-muted">Stock: {{ $product->stock }}</small>
+                                    </div>
+                                    <a href="{{ route('products.index', ['category' => optional($product->category)->name]) }}"
+                                        class="btn btn-sm btn-outline-primary w-100">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @empty
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            <i class="bi bi-info-circle"></i> No products available yet. Please check back soon!
+                        </div>
+                    </div>
+                @endforelse
             </div>
-            <!--! End of Categories Row-->
         </div>
         <!--end::Container-->
     </div>

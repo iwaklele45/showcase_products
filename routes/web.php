@@ -1,12 +1,15 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SellerRequestController;
 use App\Http\Controllers\UserController;
+use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\Category;
@@ -19,8 +22,9 @@ Route::get('/', function () {
     }
 
     $categories = Category::select('name')->distinct()->orderBy('name')->get();
+    $latestProducts = Product::with('category')->latest()->take(6)->get();
 
-    return view('home', compact('categories'));
+    return view('home', compact('categories', 'latestProducts'));
 })->name('home');
 
 
@@ -58,7 +62,52 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
     Route::post('/request-seller', [SellerRequestController::class, 'requestSeller'])
         ->name('seller.request');
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+
+    Route::resource('/admin/users', AdminUserController::class)->names('admin.users');
 });
+
+// Public products page (accessible to everyone)
+Route::get('/products', function () {
+    $categories = Category::select('name')->distinct()->orderBy('name')->get();
+    $query = Product::with(['category'])->latest();
+
+    if (request('category')) {
+        $query->whereHas('category', function ($q) {
+            $q->where('name', request('category'));
+        });
+    }
+
+    $products = $query->paginate(12);
+    return view('products.index', compact('categories', 'products'));
+})->name('products.index');
+
+Route::get('/products/{product}', function (Product $product) {
+    $product->load(['category', 'user']);
+    $relatedProducts = Product::where('id', '!=', $product->id)
+        ->latest()
+        ->take(4)
+        ->get();
+
+    return view('products.show', compact('product', 'relatedProducts'));
+})->name('products.show');
+
+Route::get('/search', function (Request $request) {
+    $searchTerm = trim((string) $request->query('q', ''));
+    $products = null;
+
+    if ($searchTerm !== '') {
+        $products = Product::with('category')
+            ->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($searchTerm) . '%'])
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+    }
+
+    return view('products.search', compact('searchTerm', 'products'));
+})->name('products.search');
 
 Route::middleware(['auth', 'role:user,seller'])->group(function () {
     Route::get('/user/dashboard', function () {
@@ -78,15 +127,15 @@ Route::middleware(['auth', 'role:user,seller'])->group(function () {
 
 
 // ========== PROFILE ROUTES ==========
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Chat Routes
-    Route::post('/chats/initiate/{product}', [App\Http\Controllers\ChatController::class, 'initiate'])->name('chats.initiate');
-    Route::get('/chats', [App\Http\Controllers\ChatController::class, 'index'])->name('chats.index');
-    Route::get('/chats/{chat}', [App\Http\Controllers\ChatController::class, 'show'])->name('chats.show');
-    Route::post('/chats/{chat}/messages', [App\Http\Controllers\ChatController::class, 'store'])->name('chats.messages.store');
+// Chat Routes
+Route::post('/chats/initiate/{product}', [App\Http\Controllers\ChatController::class, 'initiate'])->name('chats.initiate');
+Route::get('/chats', [App\Http\Controllers\ChatController::class, 'index'])->name('chats.index');
+Route::get('/chats/{chat}', [App\Http\Controllers\ChatController::class, 'show'])->name('chats.show');
+Route::post('/chats/{chat}/messages', [App\Http\Controllers\ChatController::class, 'store'])->name('chats.messages.store');
 
 
 require __DIR__ . '/auth.php';
