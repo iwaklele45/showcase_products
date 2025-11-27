@@ -31,8 +31,8 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="" class="nav-link">
-                                    <a href="{{ route('admin.users.index') }}"
-                                        class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                                    <a href="{{ route('users.index') }}"
+                                        class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}">
                                         <i class="nav-icon bi bi-person"></i>
                                         <p>Manage Users</p>
                                     </a>
@@ -44,7 +44,7 @@
 
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{{ route('seller.requests') }}" class="nav-link">
                                     <i class="nav-icon bi bi-basket"></i>
                                     <p>Request Seller Approval</p>
                                 </a>
@@ -100,12 +100,17 @@
 
                                 {{-- Logic Role User/Seller aman disini karena sudah di dalam @auth --}}
                                 @if (Auth::user()->role == 'user')
-                                    <li class="nav-item">
-                                        <a href="" class="nav-link">
-                                            <i class="nav-icon bi bi-shop-window"></i>
-                                            <p>Be a Seller</p>
-                                        </a>
-                                    </li>
+                                    @php
+                                        $hasRejectedRequest = Auth::user()->sellerVerification && Auth::user()->sellerVerification->status === 'rejected';
+                                    @endphp
+                                    @if (!$hasRejectedRequest)
+                                        <li class="nav-item">
+                                            <a href="{{ route('seller.request.form') }}" class="nav-link">
+                                                <i class="nav-icon bi bi-shop-window"></i>
+                                                <p>Be a Seller</p>
+                                            </a>
+                                        </li>
+                                    @endif
                                 @elseif (Auth::user()->role == 'seller')
                                     <li class="nav-item">
                                         <a href="{{ route('seller.index', Auth::user()->username) }}"

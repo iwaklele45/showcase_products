@@ -78,6 +78,12 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label for="weight" class="form-label">Weight (grams)</label>
+                                        <input type="number" step="0.01" name="weight" id="weight" class="form-control"
+                                            placeholder="Enter weight in grams">
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label for="image" class="form-label">Image</label>
                                         <input type="file" name="image" id="image" class="form-control">
                                         @error('image')

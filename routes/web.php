@@ -1,13 +1,14 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SellerRequestController;
-use App\Http\Controllers\UserController;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,11 +63,6 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
     Route::post('/request-seller', [SellerRequestController::class, 'requestSeller'])
         ->name('seller.request');
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
-
-    Route::resource('/admin/users', AdminUserController::class)->names('admin.users');
 });
 
 // Public products page (accessible to everyone)
@@ -132,10 +128,15 @@ Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.up
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 // Chat Routes
-Route::post('/chats/initiate/{product}', [App\Http\Controllers\ChatController::class, 'initiate'])->name('chats.initiate');
-Route::get('/chats', [App\Http\Controllers\ChatController::class, 'index'])->name('chats.index');
-Route::get('/chats/{chat}', [App\Http\Controllers\ChatController::class, 'show'])->name('chats.show');
-Route::post('/chats/{chat}/messages', [App\Http\Controllers\ChatController::class, 'store'])->name('chats.messages.store');
+Route::middleware('auth')->group(function () {
+    Route::post('/chats/initiate/{product}', 'App\Http\Controllers\ChatController@initiate')->name('chats.initiate');
+    Route::get('/chats', 'App\Http\Controllers\ChatController@index')->name('chats.index');
+    Route::get('/chats/{chat}', 'App\Http\Controllers\ChatController@show')->name('chats.show');
+    Route::post('/chats/{chat}/messages', 'App\Http\Controllers\ChatController@store')->name('chats.messages.store');
+
+    // Notification Routes
+    Route::post('/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+});
 
 
 require __DIR__ . '/auth.php';

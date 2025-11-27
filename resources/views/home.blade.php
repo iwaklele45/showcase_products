@@ -41,11 +41,12 @@
                                     <p class="mb-4 opacity-75">Browse curated items from trusted sellers, find the perfect
                                         products for your needs, and manage your shopping journey in one place.</p>
                                     <div class="d-flex flex-wrap gap-2">
-                                        <a href="{{ route('products.index') }}" class="btn btn-light btn-lg text-primary fw-semibold">
+                                        <a href="{{ route('products.index') }}"
+                                            class="btn btn-light btn-lg text-primary fw-semibold">
                                             Browse Products
                                         </a>
                                         @guest
-                                            <a href="{{ route('login') }}" class="btn btn-outline-light btn-lg fw-semibold">
+                                            <a href="/login" class="btn btn-outline-light btn-lg fw-semibold">
                                                 Log In to Get Started
                                             </a>
                                         @endguest
@@ -80,7 +81,7 @@
                     <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4">
                         <div class="card h-100 shadow-sm">
                             @if ($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top"
+                                <img src="{{ asset('images/products/' . $product->image) }}" class="card-img-top"
                                     alt="{{ $product->name }}" style="height: 210px; object-fit: cover;">
                             @else
                                 <div class="bg-secondary d-flex align-items-center justify-content-center"
@@ -99,7 +100,8 @@
                                 </p>
                                 <div class="mt-auto">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <strong class="text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</strong>
+                                        <strong class="text-primary">Rp
+                                            {{ number_format($product->price, 0, ',', '.') }}</strong>
                                         <small class="text-muted">Stock: {{ $product->stock }}</small>
                                     </div>
                                     <a href="{{ route('products.index', ['category' => optional($product->category)->name]) }}"

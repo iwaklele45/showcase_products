@@ -18,14 +18,14 @@
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active" aria-current="page">User</li>
-                        <h3 class="mb-0">Manage Users</h3>
+                        {{-- <h3 class="mb-0">Manage Users</h3> --}}
                 </div>
-                <div class="col-sm-6">
+                {{-- <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Users</li>
                     </ol>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -80,7 +80,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{-- <a href="{{ route('users.show', $user) }}" class="btn btn-info btn-sm"
+                                        <a href="{{ route('users.show', $user) }}" class="btn btn-info btn-sm"
                                             title="Lihat">
                                             <i class="bi bi-eye"></i>
                                         </a>
@@ -95,7 +95,7 @@
                                             <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
                                                 <i class="bi bi-trash"></i>
                                             </button>
-                                        </form> --}}
+                                        </form>
                                     </td>
                                 </tr>
                             @empty
@@ -116,7 +116,7 @@
 
         </div>
     </div>
-    <!--end::App Content-->
+    {{-- <!--end::App Content-->
 
     <div class="row">
         <div class="col-12">
@@ -124,7 +124,7 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="card-title">Users List</h3>
-                        <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
+                        <a href="{{ route('users.create') }}" class="btn btn-primary">
                             <i class="fas fa-plus"></i> Add New User
                         </a>
                     </div>
@@ -180,11 +180,11 @@
                                         <td>{{ $user->created_at->format('Y-m-d H:i') }}</td>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <a href="{{ route('admin.users.edit', $user) }}"
+                                                <a href="{{ route('users.edit', $user) }}"
                                                     class="btn btn-sm btn-warning me-1" title="Edit">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </a>
-                                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST"
+                                                <form action="{{ route('users.destroy', $user) }}" method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this user?');"
                                                     class="d-inline">
                                                     @csrf
@@ -211,7 +211,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     </div>
     </div>
 @endsection

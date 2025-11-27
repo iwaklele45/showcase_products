@@ -61,6 +61,7 @@ class ProductController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'stock' => $request->stock,
+            'weight' => $request->weight,
         ];
 
         // Handle image upload (store in public/images/products)
@@ -88,7 +89,7 @@ class ProductController extends Controller
         // optional: show product detail (not implemented UI)
         $seller = User::where('username', $username)->where('role', 'seller')->firstOrFail();
         if ($product->user_id !== $seller->id) abort(404);
-        return view('seller.product.show', compact('product', 'username'));
+        return view('products.show', compact('product', 'username'));
     }
 
     /**
@@ -126,6 +127,7 @@ class ProductController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'stock' => $request->stock,
+            'weight' => $request->weight,
         ];
 
         if ($request->hasFile('image')) {

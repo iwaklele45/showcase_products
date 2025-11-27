@@ -109,7 +109,7 @@
                         </div>
 
                         <div class="card-footer">
-                            <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">
+                            {{-- <a href="{{ route('users.edit', $user) }}" class="btn btn-warning">
                                 <i class="bi bi-pencil"></i> Edit
                             </a>
                             <form action="{{ route('users.destroy', $user) }}" method="POST" class="d-inline"
@@ -119,7 +119,7 @@
                                 <button type="submit" class="btn btn-danger">
                                     <i class="bi bi-trash"></i> Hapus
                                 </button>
-                            </form>
+                            </form> --}}
                             <a href="{{ route('users.index') }}" class="btn btn-secondary">
                                 Kembali
                             </a>

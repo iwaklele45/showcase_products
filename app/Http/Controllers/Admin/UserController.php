@@ -13,9 +13,18 @@ class UserController extends Controller
     /**
      * Display a listing of the users.
      */
+    // public function index()
+    // {
+    //     $users = User::orderBy('created_at', 'desc')->paginate(15);
+    //     return view('admin.users.index', compact('users'));
+    // }
+
     public function index()
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(15);
+        $users = User::where('role', '!=', 'admin')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
         return view('admin.users.index', compact('users'));
     }
 
@@ -53,8 +62,13 @@ class UserController extends Controller
             'email_verified' => $request->has('email_verified'),
         ]);
 
-        return redirect()->route('admin.users.index')
+        return redirect()->route('users.index')
             ->with('success', 'User created successfully.');
+    }
+
+    public function show(User $user)
+    {
+        return view('admin.users.show', compact('user'));
     }
 
     /**
@@ -96,7 +110,7 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('admin.users.index')
+        return redirect()->route('users.index')
             ->with('success', 'User updated successfully.');
     }
 
@@ -107,7 +121,7 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('admin.users.index')
+        return redirect()->route('users.index')
             ->with('success', 'User deleted successfully.');
     }
 }

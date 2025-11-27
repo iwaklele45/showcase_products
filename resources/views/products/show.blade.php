@@ -27,7 +27,7 @@
                 <div class="col-lg-6">
                     <div class="card shadow-sm mb-4">
                         @if ($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top"
+                            <img src="{{ asset('images/products/' . $product->image) }}" class="card-img-top"
                                 alt="{{ $product->name }}" style="max-height: 480px; object-fit: cover;">
                         @else
                             <div class="bg-secondary d-flex align-items-center justify-content-center"
@@ -58,8 +58,25 @@
                                     <p>{{ $product->stock }}</p>
                                 </div>
                                 <div class="col-sm-6">
+                                    <p class="fw-semibold mb-1">Weight</p>
+                                    <p>{{ $product->weight ? $product->weight . ' grams' : 'N/A' }}</p>
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-sm-6">
                                     <p class="fw-semibold mb-1">Seller</p>
                                     <p>{{ optional($product->user)->name ?? 'Unknown Seller' }}</p>
+                                    @auth
+                                        @if (Auth::id() !== $product->user_id)
+                                            <form action="{{ route('chats.initiate', $product->id) }}" method="POST"
+                                                class="mt-2">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                    <i class="bi bi-chat-dots"></i> Chat Seller
+                                                </button>
+                                            </form>
+                                        @endif
+                                    @endauth
                                 </div>
                             </div>
                         </div>
@@ -79,7 +96,7 @@
                     <div class="col-12 col-sm-6 col-lg-3 mb-4">
                         <div class="card h-100">
                             @if ($related->image)
-                                <img src="{{ asset('storage/' . $related->image) }}" class="card-img-top"
+                                <img src="{{ asset('images/products/' . $related->image) }}" class="card-img-top"
                                     alt="{{ $related->name }}" style="height: 180px; object-fit: cover;">
                             @else
                                 <div class="bg-light d-flex align-items-center justify-content-center"
@@ -90,18 +107,20 @@
 
                             <div class="card-body d-flex flex-column">
                                 <span class="badge bg-primary mb-2 align-self-start">
-                                    {{ $product->category->name ?? 'Uncategorized' }}
+                                    {{ $related->category->name ?? 'Uncategorized' }}
                                 </span>
-                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <h5 class="card-title">{{ $related->name }}</h5>
                                 <div class="mt-auto">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <h4 class="text-primary mb-0">Rp {{ number_format($product->price, 0, ',', '.') }}</h4>
+                                        <h4 class="text-primary mb-0">Rp {{ number_format($related->price, 0, ',', '.') }}
+                                        </h4>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <small class="text-muted">
-                                            <i class="bi bi-box-seam"></i> Stock: {{ $product->stock }}
+                                            <i class="bi bi-box-seam"></i> Stock: {{ $related->stock }}
                                         </small>
-                                        <a href="{{ route('products.show', $product) }}" class="btn btn-sm btn-outline-primary">
+                                        <a href="{{ route('products.show', $related) }}"
+                                            class="btn btn-sm btn-outline-primary">
                                             <i class="bi bi-eye"></i> View
                                         </a>
                                     </div>

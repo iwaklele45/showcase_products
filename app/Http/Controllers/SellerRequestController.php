@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\SellerVerification;
 use App\Notifications\RequestSellerNotification;
+use App\Notifications\SellerVerificationNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,6 +39,10 @@ class SellerRequestController extends Controller
 
         if ($existing && $existing->status === 'verified') {
             return back()->with('error', 'Anda sudah menjadi seller.');
+        }
+
+        if ($existing && $existing->status === 'rejected') {
+            return back()->with('error', 'Permintaan Anda telah ditolak. Anda tidak dapat mengajukan permintaan lagi.');
         }
 
         // Validate incoming store data
@@ -92,6 +97,9 @@ class SellerRequestController extends Controller
             'role' => 'seller'
         ]);
 
+        // Kirim notifikasi ke user
+        $request->user->notify(new SellerVerificationNotification($request->user, 'verified'));
+
         return back()->with('success', 'User berhasil diubah menjadi seller.');
     }
 
@@ -104,6 +112,9 @@ class SellerRequestController extends Controller
             'status' => 'rejected'
         ]);
 
-        return back()->with('error', 'Permintaan seller ditolak.');
+        // Kirim notifikasi ke user
+        $request->user->notify(new SellerVerificationNotification($request->user, 'rejected'));
+
+        return back()->with('warning', 'Permintaan seller telah ditolak.');
     }
 }

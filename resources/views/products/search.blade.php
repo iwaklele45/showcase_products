@@ -28,13 +28,9 @@
                             <form action="{{ route('products.search') }}" method="GET">
                                 <div class="row g-3 align-items-center">
                                     <div class="col-md-10">
-                                        <input type="text"
-                                               id="search-input"
-                                               name="q"
-                                               value="{{ $searchTerm }}"
-                                               class="form-control form-control-lg"
-                                               placeholder="e.g. Sneakers, Backpack, Smart Watch"
-                                               autofocus>
+                                        <input type="text" id="search-input" name="q" value="{{ $searchTerm }}"
+                                            class="form-control form-control-lg"
+                                            placeholder="e.g. Sneakers, Backpack, Smart Watch" autofocus>
                                     </div>
                                     <div class="col-md-2 d-flex align-items-end">
                                         <button type="submit" class="btn btn-primary btn-lg w-100">
@@ -70,7 +66,7 @@
                             <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4">
                                 <div class="card h-100 shadow-sm">
                                     @if ($product->image)
-                                        <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top"
+                                        <img src="{{ asset('images/products/' . $product->image) }}" class="card-img-top"
                                             alt="{{ $product->name }}" style="height: 210px; object-fit: cover;">
                                     @else
                                         <div class="bg-secondary d-flex align-items-center justify-content-center"
@@ -89,7 +85,8 @@
                                         </p>
                                         <div class="mt-auto">
                                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                                <strong class="text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</strong>
+                                                <strong class="text-primary">Rp
+                                                    {{ number_format($product->price, 0, ',', '.') }}</strong>
                                                 <small class="text-muted">Stock: {{ $product->stock }}</small>
                                             </div>
                                             <a href="{{ route('products.show', $product) }}"

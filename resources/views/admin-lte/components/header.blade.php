@@ -13,13 +13,13 @@
         <ul class="navbar-nav ms-auto">
 
             <!--begin::Navbar Search-->
-            @if (auth()->check() && optional(auth()->user())->role !== 'admin')
+            {{-- @if (auth()->check() && optional(auth()->user())->role !== 'admin')
                 <li class="nav-item">
                     <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                         <i class="bi bi-search"></i>
                     </a>
                 </li>
-            @endif
+            @endif --}}
             <li class="nav-item">
                 <div class="navbar-search-block">
                     <form class="d-flex" action="{{ route('products.search') }}" method="GET">
@@ -63,13 +63,66 @@
                     </div>
                 </li>
 
-                {{-- <!-- Notifications -->
+                <!-- Notifications -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-bs-toggle="dropdown" href="#">
                         <i class="bi bi-bell-fill"></i>
-                        <span class="navbar-badge badge text-bg-warning">15</span>
+                        @if (auth()->user()->unreadNotifications->count() > 0)
+                            <span
+                                class="navbar-badge badge text-bg-warning">{{ auth()->user()->unreadNotifications->count() }}</span>
+                        @endif
                     </a>
-                </li> --}}
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                        <span class="dropdown-header">
+                            @if (auth()->user()->unreadNotifications->count() > 0)
+                                {{ auth()->user()->unreadNotifications->count() }} Notifikasi
+                            @else
+                                Tidak ada notifikasi baru
+                            @endif
+                        </span>
+                        <div class="dropdown-divider"></div>
+                        @forelse (auth()->user()->unreadNotifications as $notification)
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        @if ($notification->type === 'App\Notifications\SellerVerificationNotification')
+                                            <h3 class="dropdown-item-title fs-7">
+                                                @if ($notification->data['status'] === 'verified')
+                                                    <i class="bi bi-check-circle text-success"></i> Permintaan Diterima
+                                                @else
+                                                    <i class="bi bi-x-circle text-danger"></i> Permintaan Ditolak
+                                                @endif
+                                            </h3>
+                                            <p class="fs-8">{{ $notification->data['message'] }}</p>
+                                            <p class="fs-8 text-secondary">
+                                                <i class="bi bi-clock-fill me-1"></i>
+                                                {{ $notification->created_at->diffForHumans() }}
+                                            </p>
+                                        @else
+                                            <h3 class="dropdown-item-title fs-7">
+                                                {{ $notification->data['message'] ?? 'Notifikasi' }}
+                                            </h3>
+                                            <p class="fs-8 text-secondary">
+                                                <i class="bi bi-clock-fill me-1"></i>
+                                                {{ $notification->created_at->diffForHumans() }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </a>
+                        @empty
+                        @endforelse
+                        @if (auth()->user()->unreadNotifications->count() > 0)
+                            <div class="dropdown-divider"></div>
+                            <form action="{{ route('notifications.markAsRead') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-center fs-8">
+                                    Tandai semua sebagai telah dibaca
+                                </button>
+                            </form>
+                        @endif
+                    </div>
+                </li>
             @endauth
 
             <!-- Fullscreen Toggle -->

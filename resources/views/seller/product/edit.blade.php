@@ -82,6 +82,12 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label for="weight" class="form-label">Weight (grams)</label>
+                                        <input type="number" step="0.01" name="weight" id="weight" class="form-control"
+                                            value="{{ old('weight', $product->weight) }}" placeholder="Enter weight in grams">
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label for="image" class="form-label">Image</label>
                                         @if ($product->image)
                                             <div class="mb-2">
