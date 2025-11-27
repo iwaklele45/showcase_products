@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -25,9 +26,8 @@ Route::get('/', function () {
 
 // ========== ADMIN ROUTES ==========
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
+        ->name('admin.dashboard');
 
     // User management
     Route::resource('users', UserController::class);
@@ -78,11 +78,15 @@ Route::middleware(['auth', 'role:user,seller'])->group(function () {
 
 
 // ========== PROFILE ROUTES ==========
-Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+
+    // Chat Routes
+    Route::post('/chats/initiate/{product}', [App\Http\Controllers\ChatController::class, 'initiate'])->name('chats.initiate');
+    Route::get('/chats', [App\Http\Controllers\ChatController::class, 'index'])->name('chats.index');
+    Route::get('/chats/{chat}', [App\Http\Controllers\ChatController::class, 'show'])->name('chats.show');
+    Route::post('/chats/{chat}/messages', [App\Http\Controllers\ChatController::class, 'store'])->name('chats.messages.store');
 
 
 require __DIR__ . '/auth.php';
