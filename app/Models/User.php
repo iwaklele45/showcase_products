@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(SellerVerification::class);
     }
+
+    public function chats()
+    {
+        return $this->hasMany(Chat::class, 'buyer_id')->orWhere('seller_id', $this->id);
+    }
 }
