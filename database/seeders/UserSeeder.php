@@ -24,37 +24,37 @@ class UserSeeder extends Seeder
             'email_verified' => true,
         ]);
 
-        // Penjual
-        User::create([
-            'username' => 'seller01',
-            'name' => 'Penjual Satu',
-            'email' => 'seller@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'seller',
-            'email_verified' => false,
-            'store_name' => 'Toko Jawa',
-            'store_description' => 'Ini adalah toko menjual peralatan elektronik'
-        ]);
+        // // Penjual
+        // User::create([
+        //     'username' => 'seller01',
+        //     'name' => 'Penjual Satu',
+        //     'email' => 'seller@example.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => 'seller',
+        //     'email_verified' => false,
+        //     'store_name' => 'Toko Jawa',
+        //     'store_description' => 'Ini adalah toko menjual peralatan elektronik'
+        // ]);
 
-        User::create([
-            'username' => 'seller02',
-            'name' => 'Penjual Dua',
-            'email' => 'seller2@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'seller',
-            'email_verified' => false,
-            'store_name' => 'Toko Jawir',
-            'store_description' => 'Ini adalah toko menjual peralatan elektronik'
-        ]);
+        // User::create([
+        //     'username' => 'seller02',
+        //     'name' => 'Penjual Dua',
+        //     'email' => 'seller2@example.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => 'seller',
+        //     'email_verified' => false,
+        //     'store_name' => 'Toko Jawir',
+        //     'store_description' => 'Ini adalah toko menjual peralatan elektronik'
+        // ]);
 
-        // User Biasa
-        User::create([
-            'username' => 'user01',
-            'name' => 'User Biasa',
-            'email' => 'user@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'user',
-            'email_verified' => false
-        ]);
+        // // User Biasa
+        // User::create([
+        //     'username' => 'user01',
+        //     'name' => 'User Biasa',
+        //     'email' => 'user@example.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => 'user',
+        //     'email_verified' => false
+        // ]);
     }
 }

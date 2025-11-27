@@ -29,7 +29,7 @@
             </li>
             <!--end::Fullscreen Toggle-->
             <li class="nav-item d-flex align-items-center">
-                <a class="nav-link" href="{{ route('user.dashboard') }}">{{ __('Kembali') }}</a>
+                <a class="nav-link" href="{{ route('home') }}">{{ __('Kembali') }}</a>
             </li>
         </ul>
         <!--end::End Navbar Links-->

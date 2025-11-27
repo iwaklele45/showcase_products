@@ -30,20 +30,26 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{{ route('users.index') }}" class="nav-link">
                                     <i class="nav-icon bi bi-person"></i>
                                     <p>All Users</p>
                                 </a>
                             </li>
                         </ul>
+                        {{-- @php
+                            $pendingCount = \App\Models\SellerVerification::where('status', 'pending')->count();
+                        @endphp --}}
+
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{{ route('seller.requests') }}" class="nav-link">
                                     <i class="nav-icon bi bi-basket"></i>
                                     <p>Request Seller</p>
                                 </a>
                             </li>
+
                         </ul>
+
                     </li>
                 @else
                     {{-- AREA PUBLIC / USER / SELLER --}}
@@ -99,7 +105,7 @@
                                 {{-- Logic Role User/Seller aman disini karena sudah di dalam @auth --}}
                                 @if (Auth::user()->role == 'user')
                                     <li class="nav-item">
-                                        <a href="" class="nav-link">
+                                        <a href="{{ route('seller.request.form') }}" class="nav-link">
                                             <i class="nav-icon bi bi-shop-window"></i>
                                             <p>Be a Seller</p>
                                         </a>
@@ -123,7 +129,7 @@
                 <li class="nav-header">ACTIONS</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-person-circle"></i>
+                        <i class="nav-icon bi bi-door-open-fill"></i>
                         <p>
                             @auth Logout
                             @else
